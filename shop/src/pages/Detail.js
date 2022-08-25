@@ -1,10 +1,11 @@
-import { useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import styled from 'styled-components';
-import { useState } from 'react';
+import { Nav } from 'react-bootstrap';
+import { Context1 } from './../App.js';
 
 // class Detail2 extends React.Component {
-//   componentDidMount() {
+//   componentDidMount() { 
 //     // 컴포넌트 mount시 여기코드 실행됨
 //   }
 //   componentDidUpdate() {
@@ -64,9 +65,6 @@ function Detail(props) {
     // 4. useEffect 실행 전에 뭔가 실행하려면 언제나 return()=>{ } 
     // useEffect 내부에 clean up function을 써준다
     // 5. 특정 state 변경시에만 실행하려면 [state명] : dependency[]에 변수명 넣어서 
-   
-
-
   
   // 컴포넌트 업데이트 = 재렌더링 
   let [count, setCount] = useState(0)
@@ -74,8 +72,19 @@ function Detail(props) {
   let {id} = useParams();
   console.log(id);
 
+  let[tab, setTab] = useState(0)
+  let[fade2, setFade2] = useState('')
+
+  useEffect(()=>{
+    let b = setTimeout(()=> { setFade2('end') }, 100)
+    return ()=>{
+      clearTimeout(b)
+      setFade2('')
+    }
+  }, [])
+
   return(
-    <div className="container">
+    <div className={'container start' + fade2}>
       { 
         alert == true
       ? <div className="alert alert-warning">
@@ -100,8 +109,37 @@ function Detail(props) {
           <button className="btn btn-danger">주문하기</button> 
         </div>
       </div>
+      <Nav variant="tabs"  defaultActiveKey="link0">
+        <Nav.Item>
+          <Nav.Link onClick={()=>{ setTab(0) }} eventKey="link0">버튼0</Nav.Link>
+        </Nav.Item>
+        <Nav.Item>
+          <Nav.Link onClick={()=>{ setTab(1) }} eventKey="link1">버튼1</Nav.Link>
+        </Nav.Item>
+        <Nav.Item>
+          <Nav.Link onClick={()=>{ setTab(2) }} eventKey="link2">버튼2</Nav.Link>
+        </Nav.Item>
+      </Nav>
+      <TabContent tab={tab}/>
     </div>   
   )
 } 
+
+function TabContent({tab}) {
+
+  let[fade, setFade]  = useState('')
+
+  useEffect(()=>{
+    let a = setTimeout(()=> { setFade('end') }, 100)
+    return ()=> {
+      clearTimeout(a)
+      setFade('')
+    }
+  }, [tab])
+
+  return (<div className ={`start ${fade}`}>
+    { [<div>내용0</div>, <div>내용1</div>, <div>내용2</div> ][tab] }
+</div>)
+}
 
 export default Detail;

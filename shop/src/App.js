@@ -1,5 +1,5 @@
 import './App.css';
-import { useState } from 'react';
+import { createContext, useState } from 'react';
 import { Button, Navbar, Container, Nav } from 'react-bootstrap';
 // import 작명 from './data.js';
 // import {a, b} from './data.js'; // 중괄호로 가져올땐 자유로운 작명 안됨
@@ -9,8 +9,11 @@ import { Routes, Route, Link, useNavigate, Outlet } from 'react-router-dom'
 import Detail from './pages/Detail.js';
 import axios from 'axios';
 
+export let Context1 = createContext()
+
 function App() {
   let [shoes, setShoes] = useState(data)
+  let [재고] = useState([10, 11, 12])
   let navigate = useNavigate();  // 페이지 이동
 
   return (
@@ -75,7 +78,11 @@ function App() {
           <Route path='one' element={<div>첫 주문시 양배추즙 서비스</div>}/> 
           <Route path='two' element={<div>생일기념 쿠폰받기</div>}/> 
         </Route>
-        <Route path="/detail/:id" element={<Detail shoes={shoes} />}/> 
+        <Route path="/detail/:id" element={
+          <Context1.Provider value={{ 재고, shoes }}>
+            <Detail shoes={shoes} />
+          </Context1.Provider>
+        }/> 
         <Route path='*' element={<div>없는 페이지에용</div>}/> 
       </Routes>
  
