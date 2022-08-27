@@ -8,6 +8,7 @@ import data from './data.js';
 import { Routes, Route, Link, useNavigate, Outlet } from 'react-router-dom'
 import Detail from './pages/Detail.js';
 import axios from 'axios';
+import Cart from './pages/Cart.js'
 
 export let Context1 = createContext()
 
@@ -26,7 +27,7 @@ function App() {
             <Link to ="/">홈</Link>
             <Link to ="/detail">상세페이지</Link>
             <Nav.Link onClick={()=>{ navigate('/') }}>Home</Nav.Link>
-            <Nav.Link onClick={()=>{ navigate('/detail') }}>Cart</Nav.Link>
+            <Nav.Link onClick={()=>{ navigate('/Cart') }}>Cart</Nav.Link>
             <Nav.Link onClick={()=>{ navigate(-1) }}>뒤로가기</Nav.Link>
             <Nav.Link href="#features">Features</Nav.Link>
             <Nav.Link href="#pricing">Pricing</Nav.Link>
@@ -84,8 +85,8 @@ function App() {
           </Context1.Provider>
         }/> 
         <Route path='*' element={<div>없는 페이지에용</div>}/> 
+        <Route path="/cart" element={<Cart/>} />
         </Routes>
-        <Route path="/cart" element={<div></div>} />
 
  
 
