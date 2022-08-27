@@ -84,7 +84,9 @@ function App() {
           </Context1.Provider>
         }/> 
         <Route path='*' element={<div>없는 페이지에용</div>}/> 
-      </Routes>
+        </Routes>
+        <Route path="/cart" element={<div></div>} />
+
  
 
     </div>

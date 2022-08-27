@@ -31,6 +31,9 @@ let Box = styled.div`
 `
 
 function Detail(props) {
+
+  let {재고, shoes} = useContext(Context1)
+
   let [alert, setAlert] = useState(true)
   
     // 컴포넌트에 갈고리 다는법
