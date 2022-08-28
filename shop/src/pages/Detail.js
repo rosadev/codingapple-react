@@ -3,6 +3,8 @@ import { useParams } from "react-router-dom";
 import styled from 'styled-components';
 import { Nav } from 'react-bootstrap';
 import { Context1 } from './../App.js';
+import { addItem } from "./../store.js"
+import { useDispatch } from "react-redux"
 
 // class Detail2 extends React.Component {
 //   componentDidMount() { 
@@ -16,31 +18,33 @@ import { Context1 } from './../App.js';
 //   }
 // };
 
+
 let YellowBtn = styled.button`
-  background : ${ props => props.bg };
-  color :${ props => props.bg == 'blue'? 'white' : 'black' };
-  padding : 10px;
+background : ${ props => props.bg };
+color :${ props => props.bg == 'blue'? 'white' : 'black' };
+padding : 10px;
 `
 // let NewBtn = styled.button(YellowBtn)`
 //   // 기존 스타일 복사 가능
 // `
 
 let Box = styled.div`
-  background : grey;
-  padding : 20px;
+background : grey;
+padding : 20px;
 `
 
 function Detail(props) {
-
-  let {재고, shoes} = useContext(Context1)
-
-  let [alert, setAlert] = useState(true)
   
-    // 컴포넌트에 갈고리 다는법
-    useEffect(()=>{
-      // 타이머 주는법
-      let a = setTimeout(()=> {setAlert(false)}, 2000)
-      // mount, update시 코드 실행
+  let {재고, shoes} = useContext(Context1)
+  
+  let [alert, setAlert] = useState(true)
+  let dispatch = useDispatch()
+  
+  // 컴포넌트에 갈고리 다는법
+  useEffect(()=>{
+    // 타이머 주는법
+    let a = setTimeout(()=> {setAlert(false)}, 2000)
+    // mount, update시 코드 실행
       console.log('안녕')
 
       // 서버로 데이터 요청하는 코드(2초 소요) : 2초 사이에 재렌더링 되면 계속 요청되어 버그 많아질듯
@@ -109,7 +113,9 @@ function Detail(props) {
           <h4 className="pt-5">{props.shoes[id].title}</h4>
           <p>{props.shoes[id].content}</p>
           <p>{props.shoes[id].price}</p>
-          <button className="btn btn-danger">주문하기</button> 
+          <button className="btn btn-danger" onClick={()=>{
+            dispatch(addItem({id: props.shoes[id].id, name: props.shoes[id].title, count : 1}))
+          }}>주문하기</button> 
         </div>
       </div>
       <Nav variant="tabs"  defaultActiveKey="link0">

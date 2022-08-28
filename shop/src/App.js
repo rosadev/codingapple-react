@@ -25,7 +25,7 @@ function App() {
           <Navbar.Brand href="#home">Navbar</Navbar.Brand>
           <Nav className="me-auto">
             <Link to ="/">홈</Link>
-            <Link to ="/detail">상세페이지</Link>
+            <Link to ="/detail/0">상세페이지</Link>
             <Nav.Link onClick={()=>{ navigate('/') }}>Home</Nav.Link>
             <Nav.Link onClick={()=>{ navigate('/Cart') }}>Cart</Nav.Link>
             <Nav.Link onClick={()=>{ navigate(-1) }}>뒤로가기</Nav.Link>
