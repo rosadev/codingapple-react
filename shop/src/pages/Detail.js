@@ -35,10 +35,21 @@ padding : 20px;
 
 function Detail(props) {
   
+  let {id} = useParams();
+  console.log(id);
+  let 찾은상품 = props.shoes.find(x => x.id == id);  
   let {재고, shoes} = useContext(Context1)
-  
   let [alert, setAlert] = useState(true)
   let dispatch = useDispatch()
+
+  useEffect(()=>{
+    let 꺼낸거 = localStorage.getItem('watched')
+    꺼낸거 = JSON.parse(꺼낸거)
+    console.log(꺼낸거)
+    꺼낸거.push(찾은상품.id)
+    console.log(꺼낸거)
+    localStorage.setItem('watched', JSON.stringify(꺼낸거))
+  }, [])
   
   // 컴포넌트에 갈고리 다는법
   useEffect(()=>{
@@ -75,9 +86,6 @@ function Detail(props) {
   
   // 컴포넌트 업데이트 = 재렌더링 
   let [count, setCount] = useState(0)
-
-  let {id} = useParams();
-  console.log(id);
 
   let[tab, setTab] = useState(0)
   let[fade2, setFade2] = useState('')

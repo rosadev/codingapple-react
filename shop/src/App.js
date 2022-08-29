@@ -1,5 +1,5 @@
 import './App.css';
-import { createContext, useState } from 'react';
+import { createContext, useEffect, useState, useTransition, useDeferredValue } from 'react';
 import { Button, Navbar, Container, Nav } from 'react-bootstrap';
 // import 작명 from './data.js';
 // import {a, b} from './data.js'; // 중괄호로 가져올땐 자유로운 작명 안됨
@@ -9,18 +9,50 @@ import { Routes, Route, Link, useNavigate, Outlet } from 'react-router-dom'
 import Detail from './pages/Detail.js';
 import axios from 'axios';
 import Cart from './pages/Cart.js'
+import { useQuery } from 'react-query';
 
 export let Context1 = createContext()
 
+let 만개어레이 = new Array(10000).fill(0)
+
 function App() {
+
+  useEffect(()=>{
+    localStorage.setItem('watched', JSON.stringify([]))
+  }, []) 
+
+  let [name, setName] = useState('')
+  let [isPending, startTransition] = useTransition() // 혁신적 성능향상
+   
   let [shoes, setShoes] = useState(data)
   let [재고] = useState([10, 11, 12])
   let navigate = useNavigate();  // 페이지 이동
 
+  let result = useQuery('작명', ()=>
+  axios.get('https://codingapple1.github.io/userdata.json')
+  .then((a)=>{
+    console.log('요청됨') 
+    return a.data 
+  }), 
+  { staleTime : 2000 } // refetch 간격 설정 가능
+  )
+
   return (
     <div className="App">
 
-     <Navbar bg="dark" variant="dark">
+      <input onChange={(e)=> { 
+        startTransition(()=>{
+          setName(e.target.value)
+        }) 
+      }}/>
+      {
+        isPending ? '로딩중' :
+        만개어레이.map(()=>{
+          return <div>{name}</div>
+        })
+      }
+
+     <Navbar bg="light" variant="light">
         <Container>
           <Navbar.Brand href="#home">Navbar</Navbar.Brand>
           <Nav className="me-auto">
@@ -32,6 +64,11 @@ function App() {
             <Nav.Link href="#features">Features</Nav.Link>
             <Nav.Link href="#pricing">Pricing</Nav.Link>
           </Nav>
+          <Nav className="ms-auto">
+            { result.isLoading && '로딩중' }
+            { result.error && '에러남' }
+            { result.data && result.data.name }
+          </Nav> 
         </Container>
       </Navbar>
 
