@@ -55,20 +55,20 @@ function App() {
      <Navbar bg="light" variant="light">
         <Container>
           <Navbar.Brand href="#home">Navbar</Navbar.Brand>
-          <Nav className="me-auto">
-            <Link to ="/">홈</Link>
-            <Link to ="/detail/0">상세페이지</Link>
-            <Nav.Link onClick={()=>{ navigate('/') }}>Home</Nav.Link>
-            <Nav.Link onClick={()=>{ navigate('/Cart') }}>Cart</Nav.Link>
-            <Nav.Link onClick={()=>{ navigate(-1) }}>뒤로가기</Nav.Link>
-            <Nav.Link href="#features">Features</Nav.Link>
-            <Nav.Link href="#pricing">Pricing</Nav.Link>
-          </Nav>
-          <Nav className="ms-auto">
-            { result.isLoading && '로딩중' }
-            { result.error && '에러남' }
-            { result.data && result.data.name }
-          </Nav> 
+            <Nav className="me-auto">
+              <Link to ="/">홈</Link>
+              <Link to ="/detail/0">상세페이지</Link>
+              <Nav.Link onClick={()=>{ navigate('/') }}>Home</Nav.Link>
+              <Nav.Link onClick={()=>{ navigate('/Cart') }}>Cart</Nav.Link>
+              <Nav.Link onClick={()=>{ navigate(-1) }}>뒤로가기</Nav.Link>
+              <Nav.Link href="#features">Features</Nav.Link>
+              <Nav.Link href="#pricing">Pricing</Nav.Link>
+            </Nav>
+            <Nav className="ms-auto">
+              { result.isLoading && '로딩중' }
+              { result.error && '에러남' }
+              { result.data && result.data.name }
+            </Nav> 
         </Container>
       </Navbar>
 
